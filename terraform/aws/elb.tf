@@ -7,7 +7,7 @@ resource "aws_elb" "default-elb" {
     lb_protocol = "http"
   }
   health_check {
-    healthy_threshold = 10
+    healthy_threshold = 5
     interval = 30
     target = "HTTP:8000/healthcheck.html"
     timeout = 5

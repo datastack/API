@@ -3,20 +3,19 @@ import logging
 
 from os import getenv
 
-AWS_ACESS_KEY_ID = getenv('AWS_ACESS_KEY_ID')
-AWS_SECRET_ACCESS_KEY = getenv('AWS_SECRET_ACCESS_KEY')
-
-
 logging.basicConfig(
     format='[%(asctime)s] [%(levelname)8s] --- %(message)s (%(filename)s:%(lineno)s)',
-    datefmt='%d/%m/%Y %I:%M:%S %p'
+    datefmt='%d/%m/%Y %I:%M:%S %p',
+    level=logging.INFO
 )
 logger = logging.getLogger(__name__)
 
-sess = boto3.Session(aws_access_key_id=AWS_ACESS_KEY_ID,
+AWS_ACCESS_KEY_ID = getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = getenv('AWS_SECRET_ACCESS_KEY')
+
+sess = boto3.Session(aws_access_key_id=AWS_ACCESS_KEY_ID,
                      aws_secret_access_key=AWS_SECRET_ACCESS_KEY,
                      region_name='us-east-1')
-
 
 elb = sess.client('elb')
 ec2 = sess.client('ec2')

@@ -1,13 +1,15 @@
+import os
 import json
 import logging
 import tornado.web
 
 from lsapi import cloudutils
-from lsapi.helpers.exceptions import APIException
+from lsapi.helpers.exceptions import APIException, InvalidAPIToken
 
 logging.basicConfig(
     format='[%(asctime)s] [%(levelname)8s] --- %(message)s (%(filename)s:%(lineno)s)',
-    datefmt='%d/%m/%Y %I:%M:%S %p'
+    datefmt='%d/%m/%Y %I:%M:%S %p',
+    level=logging.INFO
 )
 
 logger = logging.getLogger(__name__)
@@ -24,6 +26,7 @@ class CheckHandler(tornado.web.RequestHandler):
         """
            This method is responsible for the health check of the API.
         """
+        logger.info('health checking')
         self.set_status(200)
         self.finish()
 
@@ -58,7 +61,10 @@ class BaseHandler(tornado.web.RequestHandler):
         granted = False
         auth_str = headers.get('Authorization')
         auth_tkn = auth_str.split()[-1]
-        if auth_tkn == 'bHNhcGk6YmFzaWNhdXRoQVBJ':
+        api_tkn = os.getenv('API_TOKEN')
+        if not api_tkn:
+            raise InvalidAPIToken('Cannot find API TOKEN as os env')
+        if auth_tkn == api_tkn:
             granted = True
         return granted
 

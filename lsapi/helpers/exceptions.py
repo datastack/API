@@ -19,3 +19,8 @@ class APIException(tornado.web.HTTPError):
             return message + " (" + (self.log_message % self.args) + ")"
         else:
             return message
+
+
+class InvalidAPIToken(Exception): pass
+
+class InvalidToken(Exception): pass
