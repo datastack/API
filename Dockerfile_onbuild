@@ -1,6 +1,6 @@
 FROM python:3.7-alpine
 
-MANTAINER rodrigo@datastack.com.br
+LABEL maintainer="rodrigo@datastack.com.br"
 
 # Workdir
 WORKDIR /usr/src/app
