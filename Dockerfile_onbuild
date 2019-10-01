@@ -1,0 +1,20 @@
+FROM python:3.7-alpine
+
+LABEL maintainer="rodrigo@datastack.com.br"
+
+# Workdir
+WORKDIR /usr/src/app
+
+# Base Alpine Packages
+RUN apk update && apk add --no-cache tzdata libc-dev build-base libexecinfo-dev openblas-dev \
+python3-dev gcc g++ freetype freetype-dev
+
+# Localtime
+RUN rm -f /etc/localtime && ln -s /usr/share/zoneinfo/America/Sao_Paulo
+
+# Copy everything from current machine dir to container workdir
+ONBUILD COPY . .
+ONBUILD RUN pip install --no-cache-dir -r requirements.txt
+
+# Default CMD
+CMD ["python", "run.py"]
