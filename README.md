@@ -50,7 +50,7 @@ To create the API service, we **must** provide a **.env** file containing 3 vari
 
 The API_TOKEN is used as requirement - http basic authentication (base64 encoded user:password).
 Using the ec2 instance created using terraform, we can deploy aplication running the **builder.sh** script 
-locate on external_scripts_ directory of this project.
+locate on _external_scripts_ directory of this project.
 The default location of .env file is **/root/.env**. If you need to change, just edit the builder script.
 
 Running the builder script will download and deploy the API using the latest code from git repository on master branch.
